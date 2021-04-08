@@ -23,18 +23,21 @@ namespace ClassMetotDemo
             switch (userInput)
             {
                 case "1":
+                    Console.Clear();
                     AddCustomer();
                     break;
                 case "2":
+                    Console.Clear();
                     ListCustomers();
                     break;
                 case "3":
+                    Console.Clear();
                     DeleteCustomer();
                     break;
                 default:
-                    Console.WriteLine(" ");
-                    Console.WriteLine("Lütfen geçerli bir seçim yapınız."); 
-                    Console.WriteLine(" ");
+                    Console.Clear();
+                    Console.WriteLine("\n");
+                    Console.WriteLine("Lütfen geçerli bir seçim yapınız.\n"); 
                     Menu();
                     break;
             }
@@ -43,128 +46,97 @@ namespace ClassMetotDemo
         public void ListCustomers()
         {
             Console.Clear();
-            Console.WriteLine("- - - - - - - - - - - - - - - - - - - -GÜNCEL MÜŞTERİ LİSTESİ - - - - - - - - - - - - - - - - - - - - - - - -");
-            Console.WriteLine(" ");
+            Console.WriteLine("- - - - - - - - - - - - - - - - - - - -GÜNCEL MÜŞTERİ LİSTESİ - - - - - - - - - - - - - - - - - - - - - - - -\n");
             foreach (var Musteri in Customers)
             {
-                Console.WriteLine(Musteri.Id + " " + Musteri.Name + " " + Musteri.Surname + " " + Musteri.Tcno);
-                Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
-                Console.WriteLine(" ");
+                Console.WriteLine(Musteri.Id + "-) " + "Müşteri Adı: " + Musteri.Name + "\n" + " " + "Müşteri Soyadı: " + Musteri.Surname + "\n" + " " + "Müşteri TC: " + Musteri.Tcno);
+                Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
             }
 
-
-            Task.Delay(5000);
+            Console.WriteLine("Ana menüye dönmek için bir tuşa basınız.");
+            Console.ReadKey();
+            Console.Clear();
             Menu();
         }
 
         public void AddCustomer()
         {
-            Console.Clear();
             Musteri customer = new Musteri();
+            Console.WriteLine("Müşterinin adını giriniz:");
+            customer.Name = Console.ReadLine();
+            Console.WriteLine("Müşterinin soyadınız giriniz:");
+            customer.Surname = Console.ReadLine();
+            Console.WriteLine("Müşterinin TcNo bilgisini giriniz:");
+            customer.Tcno = Console.ReadLine();
+            Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+            Console.WriteLine("Yeni müşteri kaydı oluşturuluyor lütfen bekleyiniz...");
+            Console.WriteLine(".");
+            Console.WriteLine("..");
+            Console.WriteLine("...");
 
             //Listede bulunan müşteri Id sayısına göre yeni Id'nin en son verilen Id+1 olmasını sağlayan kod
             customer.Id = Customers.Count > 0 ? Customers.Max(x => x.Id) + 1 : 1;
 
-
-            Console.WriteLine("Müşterinin adını giriniz:");
-            if(Console.ReadLine() != null)
-            {
-               customer.Name = Console.ReadLine();
-            }
-            else
-            {
-                Console.WriteLine("Müşteri adı boş bırakılamaz.");
-                Console.WriteLine(" ");
-                AddCustomer();
-            }
-
-            Console.WriteLine("Müşterinin soyadınız giriniz:");
-            if (Console.ReadLine() != null)
-            {
-                customer.Surname = Console.ReadLine();
-            }
-            else
-            {
-                Console.WriteLine("Müşteri soyadı boş bırakılamaz.");
-                Console.WriteLine(" ");
-                AddCustomer();
-            }
-
- 
-            Console.WriteLine("Müşterinin tcno bilgisini giriniz:");
-            if (Console.ReadLine() != null)
-            {
-                customer.Tcno = Int64.Parse(Console.ReadLine());
-            }
-            else
-            {
-                Console.WriteLine("Tcno bilgisi boş bırakılamaz.");
-                Console.WriteLine(" ");
-                AddCustomer();
-            }
-            
-
-
             Customers.Add(customer);
-
-            Console.WriteLine("Yeni müşteri kaydı oluşturuluyor lütfen bekleyiniz...");
-            Task.Delay(5000);
-
             Console.WriteLine("Yeni müşteri kaydı başarı ile oluşturuldu!");
-            Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
-
-            Task.Delay(5000);
-
+            Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n");
+            Task.Delay(3000);
+            Console.WriteLine("Güncel müşteri listesini görmek için bir tuşa basınız.");
+            Console.ReadKey();
             ListCustomers();
+            Console.WriteLine("\n");
+            Console.WriteLine("Ana menüye dönmek için bir tuşa basınız.");
+            Console.ReadLine();
+            Console.Clear();
+            Menu();
 
         }
 
         public void DeleteCustomer()
         {
             Console.Clear();
-            Musteri customer = new Musteri();
-            Console.WriteLine("Kaydını silmek istediğiğiniz müşterinin Id'sini giriniz:");
+
+
+            Console.WriteLine("Kaydını silmek istediğiğiniz müşterinin Id'sini giriniz:\n");
             string userInput = Console.ReadKey().KeyChar.ToString();
-            Console.WriteLine(" ");
-            if(userInput != customer.Id.ToString())
-            {
-                Console.WriteLine("Bu Id'ye sahip bir müşteri bulunmamaktadır.");
-                Task.Delay(10000);
-                Console.WriteLine(" ");
-                Menu();
-            }
-            else
-            {
-                customer.Id = int.Parse(Console.ReadLine());
 
-                foreach (var m in Customers)
+            foreach (var m in Customers)
+            {
+                if (userInput != m.Id.ToString())
                 {
-                    if (m.Id == customer.Id)
-                    {
-                        List<Musteri> tmp = new List<Musteri>(Customers);
-                        tmp.Remove(m);
-                        Customers = tmp.ToList();
-                        Console.WriteLine("Müşteri kaydı siliniyor lütfen bekleyiniz...");
-                        Task.Delay(3000);
-                        Console.WriteLine("Müşteri kaydı başarı ile silindi!");
-                        Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -");
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Bu Id'ye sahip bir müşteri bulunmamaktadır.");
-                        Menu();
-                    }
+                    Console.WriteLine("Bu Id'ye sahip bir müşteri bulunmamaktadır.");
+                    Console.WriteLine("\n");
+                    Console.WriteLine("Ana menüye dönmek için bir tuşa basınız.");
+                    Console.ReadKey();
+                    Console.Clear();
+                    Menu();
                 }
-            
+                else
+                {
+                    foreach (var n in Customers)
+                    {
+                        if (n.Id == m.Id)
+                        {
+                            List<Musteri> tmp = new List<Musteri>(Customers);
+                            tmp.Remove(n);
+                            Customers = tmp.ToList();
+                            Console.WriteLine("Müşteri kaydı siliniyor lütfen bekleyiniz...");
+                            Task.Delay(3000);
+                            Console.WriteLine("Müşteri kaydı başarı ile silindi!");
+                            Console.WriteLine("\n");
+                            break;
+                        }
+                    }
+                    Task.Delay(3000);
+                    Console.WriteLine("\n");
+                    ListCustomers();
 
-
+                }
 
             }
+            
+           
 
-            Task.Delay(10000);
-            Console.WriteLine(" ");
-            ListCustomers();
         }
     }
 }

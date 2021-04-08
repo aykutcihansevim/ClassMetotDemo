@@ -10,12 +10,7 @@ namespace ClassMetotDemo
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
-        public Int64 Tcno { get; set; }
-        public int BirthDate { get; set; }
-        public int Yas { get; set; }
-        public int PhoneNumber { get; set; }
-        public string Email { get; set; }
-        public string Gender { get; set; }
+        public string Tcno { get; set; }
 
     }
 }
